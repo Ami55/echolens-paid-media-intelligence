@@ -1,0 +1,5 @@
+Standalone extraction from echolens-AI-main (2).zip. Original app and archive unchanged.
+Verified: 3 Google Ads parser tests passed; extracted server TypeScript transformed and passed JavaScript syntax checking.
+Not verified: full frontend typecheck, production bundle, live AI, and browser rendering. Dependency installation failed because registry.npmjs.org was unreachable and packages were not in the offline cache.
+Run npm ci, npm test, npm run lint, npm run build locally or let Vercel install/build.
+Set OPENAI_API_KEY in Vercel only if using live sponsored-agent preview; CSV analysis works without it.

@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --color-slate-50: #f7f8fc;
+  --color-slate-100: #f0f2f8;
+  --color-slate-200: #dfe4ef;
+  --color-slate-300: #ccd2df;
+  --color-slate-400: #8a93a8;
+  --color-slate-500: #68728a;
+  --color-slate-600: #59627a;
+  --color-slate-700: #3f4960;
+  --color-slate-800: #2b3040;
+  --color-slate-900: #151b2c;
+  --color-slate-950: #10182d;
+  --color-sky-50: #f4f2ff;
+  --color-sky-100: #ebe8ff;
+  --color-sky-200: #d9d4ff;
+  --color-sky-300: #c1b7ff;
+  --color-sky-400: #a99bff;
+  --color-sky-500: #7c61ff;
+  --color-sky-600: #5237ff;
+  --color-sky-700: #4026ec;
+  --color-sky-800: #3420ba;
+  --color-sky-900: #2a2186;
+  --color-indigo-50: #f4f2ff;
+  --color-indigo-100: #ebe8ff;
+  --color-indigo-200: #d9d4ff;
+  --color-indigo-300: #c1b7ff;
+  --color-indigo-400: #a99bff;
+  --color-indigo-500: #7c61ff;
+  --color-indigo-600: #5237ff;
+  --color-indigo-700: #4026ec;
+  --color-violet-50: #f4f2ff;
+  --color-violet-100: #ebe8ff;
+  --color-violet-200: #d9d4ff;
+  --color-violet-300: #c1b7ff;
+  --color-violet-400: #a99bff;
+  --color-violet-500: #7c61ff;
+  --color-violet-600: #5237ff;
+  --color-violet-700: #4026ec;
+  --color-violet-800: #3420ba;
+  --color-emerald-50: #e7fbf4;
+  --color-emerald-100: #d3f8eb;
+  --color-emerald-200: #a9f1d7;
+  --color-emerald-300: #74e9c2;
+  --color-emerald-400: #43e6ad;
+  --color-emerald-500: #20bd89;
+  --color-emerald-600: #09845d;
+  --color-emerald-700: #087052;
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: #f7f8fc;
+    color: #151b2c;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    letter-spacing: -0.04em;
+  }
+
+  button, input, select, textarea {
+    font: inherit;
+  }
+
+  ::selection {
+    background: #d9d4ff;
+    color: #10182d;
+  }
+}
+
+@layer components {
+  .brand-surface {
+    background-color: #f7f8fc;
+    background-image: radial-gradient(circle at 100% 0%, rgb(169 155 255 / 0.13), transparent 30rem);
+  }
+
+  .portfolio-gradient {
+    background: radial-gradient(circle at 80% 20%, rgb(82 55 255 / 0.45), transparent 38%),
+      linear-gradient(130deg, #10182d, #211453 65%, #3b0b68);
+  }
+}
+
+/* Portfolio palette bridge for legacy arbitrary-color utilities. */
+[class~="text-[#0284C7]"],
+[class~="text-[#0092B8]"] {
+  color: #5237ff !important;
+}
+
+[class~="bg-[#0092B8]"] {
+  background-color: #5237ff !important;
+}
+
+[class~="bg-[#EBF5FA]"] {
+  background-color: #f4f2ff !important;
+}
+
+[class~="border-[#0284C7]"],
+[class~="border-[#0092B8]"] {
+  border-color: #5237ff !important;
+}
+
+[class~="hover:text-[#0284C7]"]:hover,
+[class~="hover:text-[#0092B8]"]:hover {
+  color: #4026ec !important;
+}
+
+[class~="hover:bg-[#007E9E]"]:hover,
+[class~="hover:bg-[#0081A3]"]:hover,
+[class~="hover:bg-[#007f9e]"]:hover {
+  background-color: #4026ec !important;
+}
+
+[class~="focus:border-[#0092B8]"]:focus {
+  border-color: #5237ff !important;
+}
