@@ -43,3 +43,7 @@ Build generates the frontend, local server, and Vercel API bundle. The API place
 ## Validation in this handoff
 
 The source was extracted from the supplied archive, with standalone setup and hosting configuration added. Parser checks and TypeScript syntax checks are run separately. Full dependency installation, production bundling, and browser QA require package registry access; the handoff notes state their actual status.
+
+## Shared Gemini fallback
+
+The sponsored-agent simulator now uses the existing shared Gemini backend when no OpenAI connection is configured or the OpenAI request fails. No key is needed in this app for Gemini. Conversation history and supplied brand context are sent server-side; Google Search is available when a business domain is supplied. Page recommendations are only shown for returned grounding sources on that domain. If AI is unavailable the interface explicitly labels its built-in scripted response. CSV calculations remain local.
