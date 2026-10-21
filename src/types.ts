@@ -209,8 +209,8 @@ export type MarketingFunnelStage =
 export type PromptAwarenessType = 
   | 'unbranded'          // e.g., "Best site to book local guides in Rome" (Highest natural GEO signal)
   | 'category_level'     // e.g., "Top 3 platforms for private tours in Europe"
-  | 'comparative'        // e.g., "ToursByLocals vs Viator vs GetYourGuide for private tours"
-  | 'direct_brand'       // e.g., "Is ToursByLocals reliable for Rome tours?"
+  | 'comparative'        // e.g., "Example Travel vs Viator vs GetYourGuide for private tours"
+  | 'direct_brand'       // e.g., "Is Example Travel reliable for Rome tours?"
   | 'transactional';     // e.g., "Book a 6-hour private walking tour in Paris with local guide"
 
 export interface PersonaPrompt {
