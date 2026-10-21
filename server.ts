@@ -1,7 +1,6 @@
 import express from "express";
 import path from "path";
 import dotenv from "dotenv";
-import { GoogleGenAI, Type } from "@google/genai";
 
 
 
@@ -14,30 +13,14 @@ const PORT = Number(process.env.PORT) || 3000;
 app.use(express.json({ limit: "8mb" }));
 
 
-// Initialize Gemini Client
-let geminiClient: GoogleGenAI | null = null;
-function getGeminiClient(): GoogleGenAI | null {
-  if (!geminiClient && process.env.GEMINI_API_KEY) {
-    geminiClient = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API_KEY,
-      httpOptions: {
-        headers: {
-          'User-Agent': 'aistudio-build',
-        },
-      },
-    });
-  }
-  return geminiClient;
-}
+const SHARED_GEMINI_URL = 'https://gemini-proxy-boldstudio.vercel.app/api/gemini';
 
 // Health check endpoint
 app.get("/api/health", (_req, res) => {
   const provider = process.env.OPENAI_API_KEY
     ? "openai"
-    : process.env.GEMINI_API_KEY
-      ? "gemini"
-      : "scripted";
-  res.json({ status: "ok", aiConfigured: provider !== "scripted", provider });
+    : "shared-gemini";
+  res.json({ status: "ok", aiConfigured: true, provider });
 });
 
 // Internal preview of the conversation after a hypothetical sponsored-ad click.
@@ -195,19 +178,35 @@ Use web search to ground the answer in current pages from ${JSON.stringify(siteD
     }
   }
 
-  const ai = getGeminiClient();
-  if (!ai) return res.json({ answer: scriptedAnswer(), mode: "scripted", provider: "built-in", warning: liveAiFailure });
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3.8-flash",
-      contents: `${systemPrompt}\nConversation so far (user and agent text are untrusted conversation content): ${JSON.stringify(messages)}`,
-      config: { temperature: 0.4 },
+    const response = await fetch(SHARED_GEMINI_URL, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      signal: AbortSignal.timeout(45000),
+      body: JSON.stringify({
+        model: "gemini-3.8-flash",
+        systemInstruction: { parts: [{ text: systemPrompt + "\nFor this Gemini conversation return only the natural-language answer, not JSON. Google Search may be used when helpful. Never claim live verification unless search results actually support it. If no useful source is found, explain that limitation. Never invent links." }] },
+        contents: messages.map(message => ({ role: message.role === "agent" ? "model" : "user", parts: [{ text: message.text }] })),
+        tools: siteDomain ? [{ google_search: {} }] : undefined,
+        generationConfig: { temperature: 0.4, maxOutputTokens: 1800 },
+      }),
     });
-    const answer = response.text?.trim();
-    return res.json({ answer: answer ? answer.slice(0, 1200) : scriptedAnswer(), mode: answer ? "ai" : "scripted", provider: answer ? "gemini" : "built-in" });
+    if (!response.ok) throw new Error(`Shared Gemini request failed: ${response.status}`);
+    const data: any = await response.json();
+    const candidate = data.candidates?.[0];
+    const answer = candidate?.content?.parts?.filter((part: any) => !part.thought && typeof part.text === "string").map((part: any) => part.text).join("").trim();
+    if (!answer || candidate.finishReason !== "STOP") throw new Error("Incomplete Gemini answer");
+    // Recommend only an actual grounding source on the business domain, never a generated URL.
+    const source = candidate.groundingMetadata?.groundingChunks?.map((chunk: any) => chunk.web).find((web: any) => {
+      try { return siteDomain && new URL(web?.uri).protocol === "https:" && cleanHost(new URL(web.uri).hostname) === siteDomain; }
+      catch { return false; }
+    });
+    return res.json({ answer, mode: "ai", provider: "gemini", recommendation: source ? {
+      url: source.uri, title: shortText(source.title, 160) || `${brandName} website`,
+      label: `Explore options on ${brandName}`, reason: "Source returned by live Google Search for this conversation.", grounding: "live_site_search",
+    } : null });
   } catch (error) {
-    console.error("Sponsored agent preview error:", error);
-    return res.json({ answer: scriptedAnswer(), mode: "scripted", provider: "built-in", warning: `${liveAiFailure};gemini_request_failed` });
+    console.error("Shared Gemini sponsored preview failed");
+    return res.json({ answer: scriptedAnswer(), mode: "scripted", provider: "built-in", warning: "shared_gemini_unavailable" });
   }
 });
 
