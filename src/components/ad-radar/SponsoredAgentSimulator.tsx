@@ -166,7 +166,7 @@ export const SponsoredAgentSimulator: React.FC<Props> = ({ brand, prompts, searc
           ? 'OPENAI_API_KEY is not available in this deployment. Add it to the environment you are testing, then redeploy.'
           : result.warning?.includes('openai_request_failed')
             ? 'OpenAI website search failed. Check the deployment logs, API billing and model access.'
-            : 'Live AI and website search are unavailable in this deployment.';
+            : 'The shared AI service is temporarily unavailable. Please try again shortly.';
         setError(`${status} This is a built-in example response, so no page recommendation is shown.`);
       }
     } catch (cause) {
@@ -177,7 +177,7 @@ export const SponsoredAgentSimulator: React.FC<Props> = ({ brand, prompts, searc
         recommendation: undefined,
       }]);
       setMode('scripted');
-      setError('Demo mode: using built-in responses. Connect the server endpoint to enable live AI responses.');
+      setError('The AI request could not complete. This reply is a built-in example; please retry for live AI.');
     } finally { if (version === requestVersion.current) setBusy(false); }
   };
 
