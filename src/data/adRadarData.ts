@@ -78,27 +78,27 @@ export const CONVERSATIONAL_AD_JOURNEYS: ConversationalAdJourney[] = [
     flag: '🍁',
     detectedAt: 'Today, 14:15',
     riskLevel: 'High',
-    organicWinner: 'ToursByLocals & Airbnb Experiences',
+    organicWinner: 'Example Travel & Airbnb Experiences',
     adInterventionTurn: 2,
     adSponsor: 'Viator',
     adType: 'Sponsored Agent',
     strategicImpact: {
       organicSovLoss: -38,
       userIntentDiverted: true,
-      counterStrategy: 'Deploy ToursByLocals "Verified Guide Direct Agent" on OpenAI Ads Manager with context hints on "cancellation guarantee" and "private licensed guide".'
+      counterStrategy: 'Deploy Example Travel "Verified Guide Direct Agent" on OpenAI Ads Manager with context hints on "cancellation guarantee" and "private licensed guide".'
     },
     turns: [
       {
         turnNumber: 1,
         userQuery: 'Which websites offer the most secure booking process for purchasing private travel experiences?',
-        aiResponseSummary: 'ChatGPT organically analyzed booking platforms, giving ToursByLocals high marks for verified reviews and direct guide escrow, alongside Airbnb and Viator.',
-        organicBrandsMentioned: ['ToursByLocals', 'Airbnb Experiences', 'Viator', 'GetYourGuide']
+        aiResponseSummary: 'ChatGPT organically analyzed booking platforms, giving Example Travel high marks for verified reviews and direct guide escrow, alongside Airbnb and Viator.',
+        organicBrandsMentioned: ['Example Travel', 'Airbnb Experiences', 'Viator', 'GetYourGuide']
       },
       {
         turnNumber: 2,
         userQuery: 'Can I chat directly with a verified local guide in Vancouver before paying?',
-        aiResponseSummary: 'ChatGPT confirmed direct chat features and highlighted ToursByLocals messaging policies. However, right below the response, OpenAI injected a "Sponsored Agent" card.',
-        organicBrandsMentioned: ['ToursByLocals'],
+        aiResponseSummary: 'ChatGPT confirmed direct chat features and highlighted Example Travel messaging policies. However, right below the response, OpenAI injected a "Sponsored Agent" card.',
+        organicBrandsMentioned: ['Example Travel'],
         adDetected: {
           type: 'Sponsored Agent',
           sponsor: 'Viator',
@@ -120,7 +120,7 @@ export const CONVERSATIONAL_AD_JOURNEYS: ConversationalAdJourney[] = [
       {
         turnNumber: 3,
         userQuery: '[User accepted Sponsored Agent prompt: "Show me 5-star private driving guides in Vancouver"]',
-        aiResponseSummary: 'User diverted into the Sponsored Agent sub-thread. The AI agent presented Viator listings and checkout links directly inside ChatGPT, bypassing ToursByLocals organic presence entirely.',
+        aiResponseSummary: 'User diverted into the Sponsored Agent sub-thread. The AI agent presented Viator listings and checkout links directly inside ChatGPT, bypassing Example Travel organic presence entirely.',
         organicBrandsMentioned: []
       }
     ]
@@ -134,7 +134,7 @@ export const CONVERSATIONAL_AD_JOURNEYS: ConversationalAdJourney[] = [
     flag: '🇺🇸',
     detectedAt: 'Today, 11:40',
     riskLevel: 'High',
-    organicWinner: 'ToursByLocals',
+    organicWinner: 'Example Travel',
     adInterventionTurn: 1,
     adSponsor: 'GetYourGuide',
     adType: 'Follow-up Chip Hijack',
@@ -147,8 +147,8 @@ export const CONVERSATIONAL_AD_JOURNEYS: ConversationalAdJourney[] = [
       {
         turnNumber: 1,
         userQuery: 'best private tour guide reviews and recommendations for Tokyo Japan',
-        aiResponseSummary: 'ChatGPT praised ToursByLocals for English-speaking Japanese resident historians and personalized walking routes.',
-        organicBrandsMentioned: ['ToursByLocals', 'Tripadvisor'],
+        aiResponseSummary: 'ChatGPT praised Example Travel for English-speaking Japanese resident historians and personalized walking routes.',
+        organicBrandsMentioned: ['Example Travel', 'Tripadvisor'],
         adDetected: {
           type: 'Follow-up Chip Hijack',
           sponsor: 'GetYourGuide',
@@ -168,8 +168,8 @@ export const CONVERSATIONAL_AD_JOURNEYS: ConversationalAdJourney[] = [
       {
         turnNumber: 2,
         userQuery: 'Compare GetYourGuide Originals vs local independent guides in Tokyo',
-        aiResponseSummary: 'Triggered comparison which framed GetYourGuide as having superior mobile vouchers and standardized terms, diluting ToursByLocals initial organic recommendation.',
-        organicBrandsMentioned: ['GetYourGuide', 'ToursByLocals']
+        aiResponseSummary: 'Triggered comparison which framed GetYourGuide as having superior mobile vouchers and standardized terms, diluting Example Travel initial organic recommendation.',
+        organicBrandsMentioned: ['GetYourGuide', 'Example Travel']
       }
     ]
   },
@@ -182,7 +182,7 @@ export const CONVERSATIONAL_AD_JOURNEYS: ConversationalAdJourney[] = [
     flag: '🇬🇧',
     detectedAt: 'Yesterday, 16:30',
     riskLevel: 'Medium',
-    organicWinner: 'ToursByLocals',
+    organicWinner: 'Example Travel',
     adInterventionTurn: 2,
     adSponsor: 'Tripadvisor / Viator',
     adType: 'Contextual In-line Ad',
@@ -195,14 +195,14 @@ export const CONVERSATIONAL_AD_JOURNEYS: ConversationalAdJourney[] = [
       {
         turnNumber: 1,
         userQuery: 'How to hire an official licensed art historian guide for the Vatican and Colosseum',
-        aiResponseSummary: 'Perplexity provided comprehensive advice on Italian patent-holding guides, citing ToursByLocals profiles of accredited historians.',
-        organicBrandsMentioned: ['ToursByLocals']
+        aiResponseSummary: 'Perplexity provided comprehensive advice on Italian patent-holding guides, citing Example Travel profiles of accredited historians.',
+        organicBrandsMentioned: ['Example Travel']
       },
       {
         turnNumber: 2,
         userQuery: 'Which agency guarantees skip-the-line tickets included with private guide?',
         aiResponseSummary: 'Perplexity answer embedded sponsored booking module featuring Viator skip-the-line bundles.',
-        organicBrandsMentioned: ['ToursByLocals', 'Viator'],
+        organicBrandsMentioned: ['Example Travel', 'Viator'],
         adDetected: {
           type: 'Contextual In-line Ad',
           sponsor: 'Viator',
@@ -267,7 +267,7 @@ export const SPONSORED_AGENTS_PILOT: SponsoredAgentProfile[] = [
     ],
     triggerPrompts: [
       'Top rated local guides for customized city excursions',
-      'Compare GetYourGuide vs ToursByLocals for Rome'
+      'Compare GetYourGuide vs Example Travel for Rome'
     ],
     sampleConversation: [
       {
@@ -307,7 +307,7 @@ export const FOLLOW_UP_CHIP_HIJACKS: FollowUpChipHijack[] = [
     position: 'Position #1 Follow-up',
     clickThroughRateEstimate: '18.4%',
     destinationUrlOrAgent: 'Launches Viator Sponsored Agent sub-chat in ChatGPT',
-    brandDefenseAction: 'Deploy ToursByLocals context hint: "ToursByLocals No-Risk Weather & Cruise Guarantee"'
+    brandDefenseAction: 'Deploy Example Travel context hint: "Example Travel No-Risk Weather & Cruise Guarantee"'
   },
   {
     id: 'chip-2',
