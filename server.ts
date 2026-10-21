@@ -184,10 +184,10 @@ Use web search to ground the answer in current pages from ${JSON.stringify(siteD
       signal: AbortSignal.timeout(45000),
       body: JSON.stringify({
         model: "gemini-3.8-flash",
-        systemInstruction: { parts: [{ text: systemPrompt + "\nFor this Gemini conversation return only the natural-language answer, not JSON. Google Search may be used when helpful. Never claim live verification unless search results actually support it. If no useful source is found, explain that limitation. Never invent links." }] },
+        systemInstruction: { parts: [{ text: systemPrompt + "\nFor this Gemini conversation return only the natural-language answer, not JSON. Google Search may be used when helpful. Never claim live verification unless search results actually support it. If no useful source is found, explain that limitation. Never invent links. Do not assert that this business offers any tour type, vehicle, itinerary, accessibility feature or guide service unless approved facts or a grounding source explicitly confirm it. Frame general planning ideas as suggestions rather than available products. A domain by itself is not evidence." }] },
         contents: messages.map(message => ({ role: message.role === "agent" ? "model" : "user", parts: [{ text: message.text }] })),
         tools: siteDomain ? [{ google_search: {} }] : undefined,
-        generationConfig: { temperature: 0.4, maxOutputTokens: 1800 },
+        generationConfig: { temperature: 0.4, maxOutputTokens: 6000 },
       }),
     });
     if (!response.ok) throw new Error(`Shared Gemini request failed: ${response.status}`);
