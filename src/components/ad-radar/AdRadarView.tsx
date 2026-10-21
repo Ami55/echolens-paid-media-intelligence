@@ -10,7 +10,7 @@ interface SponsoredObservation { id: string; prompt: string; sponsor: string; pl
 interface Props { brand: BrandProfile; prompts: PromptItem[]; }
 
 export const AdRadarView: React.FC<Props> = ({ brand, prompts }) => {
-  const [tab, setTab] = useState<Tab>('google-ads');
+  const [tab, setTab] = useState<Tab>('agent');
   const [adsData, setAdsData] = useState<GoogleAdsImport | null>(() => {
     try { return JSON.parse(localStorage.getItem('ecolens_google_ads_search_terms') || 'null'); } catch { return null; }
   });
@@ -120,23 +120,21 @@ export const AdRadarView: React.FC<Props> = ({ brand, prompts }) => {
   };
 
   return <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-    <header className="rounded-3xl bg-gradient-to-r from-[#11162E] via-[#28205D] to-[#53127A] p-6 text-white shadow-xl">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
-        <div><div className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#B9AEFF]">EchoLens Paid Media Lab</div><h1 className="text-2xl font-bold mt-2">Paid Media Intelligence</h1><p className="text-xs text-white/65 mt-2 max-w-2xl leading-relaxed">Connect real Google Ads search demand to AI prompt opportunities, campaign actions and conversation-ready creative.</p></div>
-        <div className="px-3 py-2 rounded-xl bg-white/10 border border-white/15 text-[11px] font-bold">{adsData ? `${adsData.rowCount.toLocaleString()} search terms imported` : 'Google Ads data not imported'}</div>
-      </div>
+    <header className="conversation-hero">
+      <div className="hero-copy"><div className="hero-eyebrow"><span/> THE CONVERSATIONAL AD STUDIO</div><h1>Turn a question into<br/><em>a conversation.</em></h1><p>Explore how a sponsored agent can help someone discover your brand, ask better questions, and find their next step.</p><button className="hero-action" onClick={()=>{setTab('agent');document.getElementById('agent-workspace')?.scrollIntoView({behavior:'smooth',block:'start'});}}>Explore the agent simulator <ArrowRight size={18}/></button><div className="hero-footnote">Interactive prototype · AI responses when configured, scripted fallback otherwise</div></div>
+      <div className="hero-conversation" aria-hidden="true"><div className="hero-chat-label"><Bot size={19}/> SPONSORED CONVERSATION <span>PREVIEW</span></div><div className="hero-question">Can you help me find the right experience?</div><div className="hero-answer">Let’s make it personal. What matters most to you?</div><div className="hero-chip-row"><span>Your interests</span><span>Your questions</span><span>Your next step ↗</span></div><div className="hero-chat-footer"><span className="hero-orb">✳</span> From discovery to a useful dialogue.</div></div>
     </header>
 
-    <nav className="flex gap-2 overflow-x-auto pb-1">
+    <nav aria-label="Studio workspaces" className="studio-tabs flex gap-2 overflow-x-auto pb-1">
       {([
+        ['agent', 'Agent simulator', Bot],
         ['google-ads', 'Google Ads data', Upload],
         ['observations', 'Sponsored Agent monitor', Eye],
         ['scenarios', 'Competitive scenarios', AlertTriangle],
         ['opportunities', 'Conversation opportunities', Target],
         ['readiness', 'Ad readiness', ShieldCheck],
         ['creative', 'Creative studio', WandSparkles],
-        ['agent', 'Sponsored agent simulator', Bot],
-      ] as const).map(([id, label, Icon]) => <button key={id} onClick={() => setTab(id)} className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 whitespace-nowrap cursor-pointer ${tab === id ? 'bg-violet-600 text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:border-violet-300'}`}><Icon className="w-4 h-4" />{label}</button>)}
+      ] as const).map(([id, label, Icon]) => <button key={id} onClick={() => setTab(id)} aria-pressed={tab===id} className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 whitespace-nowrap cursor-pointer ${tab === id ? 'bg-violet-600 text-white shadow-md' : 'bg-white border border-slate-200 text-slate-600 hover:border-violet-300'}`}><Icon className="w-4 h-4" />{label}</button>)}
     </nav>
 
     {tab === 'google-ads' && <GoogleAdsPanel data={adsData} campaigns={campaignData} timeSeries={timeSeries} landingPages={landingPages} importing={importing} error={importError} onImport={importGoogleAds} onCampaignImport={importCampaigns} onTimeSeriesImport={importTimeSeries} onLandingPageImport={importLandingPages} />}

@@ -190,12 +190,13 @@ export const SponsoredAgentSimulator: React.FC<Props> = ({ brand, prompts, searc
     void send(initialQuery, []);
   };
 
-  return <div className="space-y-4">
+  return <div id="agent-workspace" className="agent-workspace space-y-4">
+    <div className="workspace-heading"><div><span className="workspace-eyebrow">THE MAIN EXPERIENCE</span><h2>Meet your sponsored agent.</h2><p>Set a scenario. Open the conversation. Explore the follow-up.</p></div><span className="workspace-badge"><Bot size={16}/> Interactive simulator</span></div>
     <div className="rounded-xl border border-violet-200 bg-violet-50 px-4 py-3 text-[11px] leading-relaxed text-violet-800">
       <strong>Internal simulation:</strong> The ad placement and traveller conversation below are examples. This does not show a live ChatGPT ad or predict who will see one. Google Ads queries are used only to suggest scenarios.
     </div>
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-      <div className="lg:col-span-4 rounded-2xl border border-slate-200 bg-white p-5 space-y-4">
+      <div className="scenario-panel lg:col-span-4 rounded-2xl border border-slate-200 bg-white p-5 space-y-4">
         <div><div className="text-[10px] font-bold uppercase tracking-wider text-violet-600">1 · Set the scene</div><h2 className="mt-1 text-sm font-bold text-slate-900">What is the traveller looking for?</h2></div>
         <label className="block text-[11px] font-semibold text-slate-700">Choose a starting idea
           <select value={selectedSeed.id} onChange={event => { setSelectedSeedId(event.target.value); setCustomQuery(''); reset(); }} className="mt-2 w-full rounded-xl border border-slate-200 bg-white p-2.5 text-xs">
@@ -212,9 +213,9 @@ export const SponsoredAgentSimulator: React.FC<Props> = ({ brand, prompts, searc
         {stage === 'chat' && <button onClick={reset} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50">Restart simulation</button>}
       </div>
 
-      <div className="lg:col-span-8 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+      <div className="conversation-panel lg:col-span-8 overflow-hidden rounded-2xl border border-slate-200 bg-white">
         {stage === 'ad' ? <div className="space-y-5 p-5">
-          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">2 · Simulated ad placement</div>
+          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">2 · Your conversation starts here</div>
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
             <div className="text-[10px] font-bold text-slate-500">Traveller asks</div>
             <p className="mt-2 text-sm font-semibold text-slate-800">{initialQuery}</p>
@@ -224,7 +225,7 @@ export const SponsoredAgentSimulator: React.FC<Props> = ({ brand, prompts, searc
             <div className="inline-flex rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-violet-700 border border-violet-200">Sponsored · {brand.name} · simulation</div>
             <h3 className="mt-3 text-base font-bold text-slate-900">Explore private tours with {brand.name}</h3>
             <p className="mt-2 text-xs leading-relaxed text-slate-600">Ask about options for your interests, group and travel plans. Review the details on the website before booking.</p>
-            <button onClick={startConversation} className="mt-4 inline-flex items-center gap-2 rounded-xl bg-violet-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-violet-700">Open sponsored conversation <ArrowRight className="h-4 w-4" /></button>
+            <button onClick={startConversation} className="start-conversation mt-4 inline-flex items-center gap-2 rounded-xl bg-violet-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-violet-700">Start conversation <ArrowRight className="h-4 w-4" /></button>
           </div>
           <p className="text-[10px] text-slate-500">The sponsored conversation opens separately after the traveller clicks the ad.</p>
         </div> : <div>
@@ -232,7 +233,7 @@ export const SponsoredAgentSimulator: React.FC<Props> = ({ brand, prompts, searc
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-600 text-white"><Bot className="h-5 w-5" /></div>
             <div><div className="text-sm font-bold text-slate-900">{brand.name} sponsored agent</div><div className="text-[10px] text-slate-500">Separate conversation · simulated {mode === 'scripted' ? '· scripted responses' : mode === 'ai' ? '· AI responses' : ''}</div></div>
           </div>
-          <div className="max-h-[470px] min-h-72 space-y-3 overflow-y-auto p-5" role="log" aria-live="polite">
+          <div className="chat-transcript max-h-[560px] min-h-80 space-y-3 overflow-y-auto p-5" role="log" aria-live="polite">
             {messages.map((message, index) => message.role === 'user' ? (
               <div key={index} className="ml-auto max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-violet-600 p-3 text-xs leading-relaxed text-white">{message.text}</div>
             ) : (
