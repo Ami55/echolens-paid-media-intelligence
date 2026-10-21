@@ -182,7 +182,7 @@ Use web search to ground the answer in current pages from ${JSON.stringify(siteD
         provider: "openai",
         recommendation: recommendedUrl ? {
           url: recommendedUrl,
-          title: recommendedSource?.title || "ToursByLocals website",
+          title: recommendedSource?.title || `${brandName} website`,
           label: shortText(structured?.ctaLabel, 90) || `Explore options on ${brandName}`,
           reason: shortText(structured?.recommendationReason, 220),
           grounding: "live_site_search",
